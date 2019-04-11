@@ -6,9 +6,7 @@ def insertion_sort(arr):
     """
 
     # Ausgabe vom Startarray
-    #Test
     print("Unsortiertes Array:  ", arr)
-    test = 5
 
     # Durchlaufe jedes Element im Array
     for i in range(1, len(arr)):

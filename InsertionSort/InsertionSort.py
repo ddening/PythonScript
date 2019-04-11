@@ -12,9 +12,9 @@ def insertion_sort(arr):
     for i in range(1, len(arr)):
         # zu vergleichender Wert
         element = arr[i] 
-        # Index für Elemente links vom 'element'
+        # Index fÃ¼r Elemente links vom 'element'
         index_left = i-1 
-        # solange der linke Wert größe als unser 'element' -- tausche deren Position
+        # solange der linke Wert grÃ¶ÃŸer als unser 'element' -- tausche deren Position
         while index_left > -1 and arr[index_left] > element:
             arr[index_left + 1] = arr[index_left]
             arr[index_left] = element

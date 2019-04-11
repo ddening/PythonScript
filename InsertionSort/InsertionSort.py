@@ -6,13 +6,15 @@ def insertion_sort(arr):
     """
 
     # Ausgabe vom Startarray
+    #Test
     print("Unsortiertes Array:  ", arr)
+    test = 5
 
     # Durchlaufe jedes Element im Array
     for i in range(1, len(arr)):
         # zu vergleichender Wert
         element = arr[i] 
-        # Index für Elemente links vom 'element'
+        # Index f�r Elemente links vom 'element'
         index_left = i-1 
         # solange der linke Wert größer als unser 'element' -- tausche deren Position
         while index_left > -1 and arr[index_left] > element:

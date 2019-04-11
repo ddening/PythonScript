@@ -1,4 +1,4 @@
-def mergeSort():
+def merge_sort():
     """Merge Sort
 
     Args:   

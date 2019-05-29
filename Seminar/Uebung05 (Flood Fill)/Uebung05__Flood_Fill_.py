@@ -11,13 +11,14 @@
 import os
 import time
 import colorama
+import copy
 
  # GLOBALE DEFINITION 
 RED = '\033[31m'    # mode 31 = red forground
 RESET = '\033[0m'   # mode 0  = reset
 
 # ++++++ INFO ++++++
-MAX_TIME = 0.1      # Verlangsame die Ausgabe im cmd Fenster
+MAX_TIME = 0.01      # Verlangsame die Ausgabe im cmd Fenster
 VISUAL = 0          # Zur visuellen Darstellung aller Einzelschritte auf <1> setzen (lange Ausführzeit)
 COLOR = 1           # Füllung der Felder gefärbt. Setze <0> um Ausführzeit gegebenenfalls zu verkürzen
 
@@ -29,6 +30,22 @@ def printField(field):
         for j in range(0, len(field[i])):
             _string = _string + field[i][j]
         print(_string)
+
+
+def doublePrint(field, _field):
+    _string0 = ""
+    _string1 = ""
+    _string = ""
+
+    for i in range(0, len(field)):
+        _string0 = ""
+        _string1 = ""
+        for j in range(0, len(field[i])):
+            _string0 = _string0 + field[i][j]
+            _string1 = _string1 + _field[i][j]
+        _string = _string0 + "   " + _string1
+        print(_string)
+
 
 def fillFlood(field, x, y, emptyMarker, filledMarker):
     ''' Docstring'''
@@ -119,6 +136,8 @@ def main():
     field = []
     # Enthält fertige gefüllte Felder
     filledFields = []
+    # Clean deep copy
+    copyFields = []
 
      # Erzeuge Spielfeld
     for i in range(0, numberOfRows):
@@ -135,37 +154,47 @@ def main():
 
     
     # Fülle Feld mit Startpunkten (x = 5, y = 5)
+    copyFields.append(copy.deepcopy(field))
     _field = fillFlood(field, 5, 5, emptyMarker, filledMarker)
     filledFields.append(_field)
 
     # Erzeuge Spielfeld aus field.txt Datei
     field = convertFileToField("field.txt", emptyMarker, filledMarker)
+    copyFields.append(copy.deepcopy(field))
     _field = fillFlood(field, 14, 39, emptyMarker, "e")
     filledFields.append(_field)
 
     # Erzeuge Spielfeld aus field2.txt Datei
     field = convertFileToField("field2.txt", emptyMarker, filledMarker)
+    copyFields.append(copy.deepcopy(field))
     _field= fillFlood(field, 7, 3, emptyMarker, "e")
     filledFields.append(_field)
 
     # Erzeuge Spielfeld aus field3.txt Datei
     field = convertFileToField("field3.txt", emptyMarker, filledMarker)
+    copyFields.append(copy.deepcopy(field))
     _field = fillFlood(field, 15, 20, emptyMarker, "e")
     filledFields.append(_field)
 
      # Erzeuge Spielfeld aus monalisatxt Datei
     field = convertFileToField("monalisa.txt", emptyMarker, filledMarker)
+    # deep copy by value ;; not by reference
+    copyFields.append(copy.deepcopy(field))
     _field = fillFlood(field, 41, 65, emptyMarker, "e")
     filledFields.append(_field)
      
      # Erzeuge Spielfeld aus monalisatxt Datei
     field = convertFileToField("laby1.txt", emptyMarker, filledMarker)
+    copyFields.append(copy.deepcopy(field))
     _field = fillFlood(field, 7, 22, emptyMarker, "e")
     filledFields.append(_field)
-
+    
     if not VISUAL:
         # Gebe alle fertigen Felder aus
-        for i in filledFields:
+        for i,j in zip(filledFields, copyFields):
             print("\n\n\n")
-            printField(i)
+            #printField(i)
+            doublePrint(j, i)
+    
+
 main()

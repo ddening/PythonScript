@@ -10,7 +10,7 @@ RESET = '\033[0m'   # mode 0  = reset
 
 # ++++++ INFO ++++++
 MAX_TIME = 0.00     # Verlangsame die Ausgabe im cmd Fenster
-VISUAL = 0          # Zur visuelle Darstellung aller Einzelschritte auf <1> setzen (lange Ausführzeit)
+VISUAL = 0          # Zur visuellen Darstellung aller Einzelschritte auf <1> setzen (lange Ausführzeit)
 COLOR = 1           # Füllung der Felder gefärbt. Setze <0> um Ausführzeit gegebenenfalls zu verkürzen
 
 def printField(field):
@@ -82,7 +82,7 @@ def main():
     # +++ INIT +++
     colorama.init()
     
-    # Spielfeldgrößte
+    # Spielfeldgröße
     numberOfColumns = 20    # Spalten
     numberOfRows = 10       # Zeilen
 
@@ -102,7 +102,7 @@ def main():
     for i in range(0, numberOfRows):
         field[i][3] = filledMarker
         field[i][15] = filledMarker
-
+    # Erzeuge Umrandung
     for i in range(0, numberOfColumns):
         field[1][i] = filledMarker
         field[8][i] = filledMarker

@@ -1,5 +1,5 @@
 def insertion_sort(arr):
-    """Sortier ein Array mit InsertionSort 
+    """Sortiert ein Array mit InsertionSort 
 
     Args:
         arr: zu sortierendes Array
@@ -33,5 +33,4 @@ def main():
 
     # print(insertion_sort.__doc__)
 
-    # Code ...
 main()

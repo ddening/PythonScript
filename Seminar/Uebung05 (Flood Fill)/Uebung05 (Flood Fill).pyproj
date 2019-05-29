@@ -3,15 +3,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>650b7c67-a7e7-4d5e-b1d7-2a1214476781</ProjectGuid>
+    <ProjectGuid>26a34dec-ffba-4ee0-8584-aca6d0598345</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Uebung01.py</StartupFile>
+    <StartupFile>Uebung05__Flood_Fill_.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Uebung01</Name>
-    <RootNamespace>Uebung01</RootNamespace>
+    <Name>Uebung05 (Flood Fill)</Name>
+    <RootNamespace>Uebung05 (Flood Fill)</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
     <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
     <InterpreterVersion>3.5</InterpreterVersion>
   </PropertyGroup>
@@ -24,9 +25,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Uebung01.py" />
+    <Compile Include="Uebung05__Flood_Fill_.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="field.txt" />
+    <Content Include="field2.txt" />
+    <Content Include="field3.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\2.7" />
     <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\3.5" />
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,12 @@
-# Seminar Uebung 05 (Flood Fill)
+# Seminar Uebung 05 (Flood Fill)                         
+#  _____________________________________
+#                                       
+#          /               ,            
+#  ----__-/----__----__--------__----__-
+#    /   /   /___) /   ) /   /   ) /   )
+#  _(___/___(___ _/___/_/___/___/_(___/_
+#                                    /  
+#                                (_ /   
 
 import os
 import time
@@ -9,7 +17,7 @@ RED = '\033[31m'    # mode 31 = red forground
 RESET = '\033[0m'   # mode 0  = reset
 
 # ++++++ INFO ++++++
-MAX_TIME = 0.00     # Verlangsame die Ausgabe im cmd Fenster
+MAX_TIME = 0.1      # Verlangsame die Ausgabe im cmd Fenster
 VISUAL = 0          # Zur visuellen Darstellung aller Einzelschritte auf <1> setzen (lange Ausführzeit)
 COLOR = 1           # Füllung der Felder gefärbt. Setze <0> um Ausführzeit gegebenenfalls zu verkürzen
 
@@ -25,16 +33,17 @@ def printField(field):
 def fillFlood(field, x, y, emptyMarker, filledMarker):
     ''' Docstring'''
 
-    if x < 0 or y < 0 or x > len(field) - 1 or y > len(field[0]) - 1:
+    if x < 0 or y < 0 or x > len(field) - 1 or y > len(field[x]) - 1 :
         return
-    if field[x][y] is emptyMarker:
-        if COLOR:
-            field[x][y] = RED + filledMarker + RESET
-        else:
-            field[x][y] = filledMarker
+
+    if field[x][y] != emptyMarker:
+        return
+
+    if COLOR:
+        field[x][y] = RED + filledMarker + RESET
     else:
-        return
-    
+        field[x][y] = filledMarker
+
     if VISUAL:
         time.sleep(MAX_TIME)
         os.system('cls')
@@ -107,6 +116,7 @@ def main():
         field[1][i] = filledMarker
         field[8][i] = filledMarker
 
+
     # Fülle Feld mit Startpunkten (x = 5, y = 5)
     _field = fillFlood(field, 5, 5, emptyMarker, filledMarker)
     filledFields.append(_field)
@@ -126,10 +136,14 @@ def main():
     _field = fillFlood(field, 15, 20, emptyMarker, "e")
     filledFields.append(_field)
 
+     # Erzeuge Spielfeld aus monalisatxt Datei
+    field = convertFileToField("monalisa.txt", emptyMarker, filledMarker)
+    _field = fillFlood(field, 41, 65, emptyMarker, "e")
+    filledFields.append(_field)
+
     if not VISUAL:
         # Gebe alle fertigen Felder aus
         for i in filledFields:
             print("\n\n\n")
             printField(i)
-
 main()

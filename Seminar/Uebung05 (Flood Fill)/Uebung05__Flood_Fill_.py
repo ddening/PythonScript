@@ -56,6 +56,23 @@ def fillFlood(field, x, y, emptyMarker, filledMarker):
     fillFlood(field, x, y-1, emptyMarker, filledMarker)
 
     return field
+
+def searchMaxLine(filename):
+    ''' Docstring'''
+
+    _max = []
+
+    f = open(filename, "r")
+    line = f.readline()
+
+    while line:
+        # Erzeuge leeres Spielfeld
+        _max.append(len(line))
+        line = f.readline()
+
+    f.close() 
+
+    return max(_max)
     
 def convertFileToField(filename, emptyMarker, filledMarker):
     ''' Docstring'''
@@ -67,7 +84,7 @@ def convertFileToField(filename, emptyMarker, filledMarker):
 
     while line:
         # Erzeuge leeres Spielfeld
-        field.append([emptyMarker] * (len(line)-1))
+        field.append([emptyMarker] * (searchMaxLine(filename) - 1)) # * (len(line)-1)
         line = f.readline()
 
     f.close() 
@@ -116,7 +133,7 @@ def main():
         field[1][i] = filledMarker
         field[8][i] = filledMarker
 
-
+    
     # Fülle Feld mit Startpunkten (x = 5, y = 5)
     _field = fillFlood(field, 5, 5, emptyMarker, filledMarker)
     filledFields.append(_field)
@@ -139,6 +156,11 @@ def main():
      # Erzeuge Spielfeld aus monalisatxt Datei
     field = convertFileToField("monalisa.txt", emptyMarker, filledMarker)
     _field = fillFlood(field, 41, 65, emptyMarker, "e")
+    filledFields.append(_field)
+     
+     # Erzeuge Spielfeld aus monalisatxt Datei
+    field = convertFileToField("laby1.txt", emptyMarker, filledMarker)
+    _field = fillFlood(field, 7, 22, emptyMarker, "e")
     filledFields.append(_field)
 
     if not VISUAL:

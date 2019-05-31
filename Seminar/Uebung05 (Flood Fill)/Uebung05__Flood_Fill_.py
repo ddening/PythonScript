@@ -7,194 +7,72 @@
 #  _(___/___(___ _/___/_/___/___/_(___/_
 #                                    /  
 #                                (_ /   
+# Quellen:
+# https://stackoverflow.com/questions/7370801/measure-time-elapsed-in-python
 
-import os
-import time
-import colorama
 import copy
+import colorama
+import sys
+from timeit import default_timer as timer
 
- # GLOBALE DEFINITION 
-RED = '\033[31m'    # mode 31 = red forground
-RESET = '\033[0m'   # mode 0  = reset
-
-# ++++++ INFO ++++++
-MAX_TIME = 0.01      # Verlangsame die Ausgabe im cmd Fenster
-VISUAL = 0          # Zur visuellen Darstellung aller Einzelschritte auf <1> setzen (lange Ausführzeit)
-COLOR = 1           # Füllung der Felder gefärbt. Setze <0> um Ausführzeit gegebenenfalls zu verkürzen
-
-def printField(field):
-    ''' Docstring'''
-
-    for i in range(0, len(field)):
-        _string = ""
-        for j in range(0, len(field[i])):
-            _string = _string + field[i][j]
-        print(_string)
-
-
-def doublePrint(field, _field):
-    _string0 = ""
-    _string1 = ""
-    _string = ""
-
-    for i in range(0, len(field)):
-        _string0 = ""
-        _string1 = ""
-        for j in range(0, len(field[i])):
-            _string0 = _string0 + field[i][j]
-            _string1 = _string1 + _field[i][j]
-        _string = _string0 + "   " + _string1
-        print(_string)
-
-
-def fillFlood(field, x, y, emptyMarker, filledMarker):
-    ''' Docstring'''
-
-    if x < 0 or y < 0 or x > len(field) - 1 or y > len(field[x]) - 1 :
-        return
-
-    if field[x][y] != emptyMarker:
-        return
-
-    if COLOR:
-        field[x][y] = RED + filledMarker + RESET
-    else:
-        field[x][y] = filledMarker
-
-    if VISUAL:
-        time.sleep(MAX_TIME)
-        os.system('cls')
-        printField(field)
-
-    # Rekursive Aufrufe fuer alle 4 Positionen
-    fillFlood(field, x+1, y, emptyMarker, filledMarker)
-    fillFlood(field, x-1, y, emptyMarker, filledMarker)
-    fillFlood(field, x, y+1, emptyMarker, filledMarker)
-    fillFlood(field, x, y-1, emptyMarker, filledMarker)
-
-    return field
-
-def searchMaxLine(filename):
-    ''' Docstring'''
-
-    _max = []
-
-    f = open(filename, "r")
-    line = f.readline()
-
-    while line:
-        # Erzeuge leeres Spielfeld
-        _max.append(len(line))
-        line = f.readline()
-
-    f.close() 
-
-    return max(_max)
-    
-def convertFileToField(filename, emptyMarker, filledMarker):
-    ''' Docstring'''
-
-    field = []
-
-    f = open(filename, "r")
-    line = f.readline()
-
-    while line:
-        # Erzeuge leeres Spielfeld
-        field.append([emptyMarker] * (searchMaxLine(filename) - 1)) # * (len(line)-1)
-        line = f.readline()
-
-    f.close() 
-
-    # Fülle Feld
-    f = open(filename, "r")
-    line = f.readline()
-    
-    counter = 0
-    while line:
-        for j in range (0, len(line) - 1):
-            field[counter][j] = line[j]
-        line = f.readline()
-        counter = counter + 1
-
-    return field
+import control
+import model
 
 def main():
     ''' Docstring'''
 
-    # +++ INIT +++
+    # === INIT ===
     colorama.init()
+    sys.setrecursionlimit(10000)
     
-    # Spielfeldgröße
-    numberOfColumns = 20    # Spalten
-    numberOfRows = 10       # Zeilen
-
     emptyMarker = " "
-    filledMarker = "x"
+    filledMarker = "e"
+    _emptyFieldCounter = 0
 
-    # Erzeuge generische Liste
-    field = []
-    # Enthält fertige gefüllte Felder
+    # Felder Listen Definition
+    emptyFields = []
     filledFields = []
-    # Clean deep copy
-    copyFields = []
 
-     # Erzeuge Spielfeld
-    for i in range(0, numberOfRows):
-        field.append([emptyMarker] * numberOfColumns)
+    # Liste mit vorgefertigten Feldern und Startpunkt 
+    fieldList = [("field.txt", (14, 39)), ("field2.txt", (7, 3)), ("field3.txt", (15, 20)), ("monalisa.txt", (41, 65)), ("laby1.txt", (7, 22))]
 
-    # Erzeuge Umrandung
-    for i in range(0, numberOfRows):
-        field[i][3] = filledMarker
-        field[i][15] = filledMarker
-    # Erzeuge Umrandung
-    for i in range(0, numberOfColumns):
-        field[1][i] = filledMarker
-        field[8][i] = filledMarker
-
+    # Erzeuge erstes "default" Feld aus Seminaraufgabe
+    emptyFields.append(model.defaultField())
+    filledFields.append(control.fillFlood(emptyFields[0], control.randomStartPoint(emptyFields[_emptyFieldCounter]), emptyMarker, filledMarker))
+    _emptyFieldCounter = _emptyFieldCounter + 1
     
-    # Fülle Feld mit Startpunkten (x = 5, y = 5)
-    copyFields.append(copy.deepcopy(field))
-    _field = fillFlood(field, 5, 5, emptyMarker, filledMarker)
-    filledFields.append(_field)
+    # Erzeuge und fülle Felder aus .txt Dateien
+    for filename in fieldList:
+  
+        start = timer()
 
-    # Erzeuge Spielfeld aus field.txt Datei
-    field = convertFileToField("field.txt", emptyMarker, filledMarker)
-    copyFields.append(copy.deepcopy(field))
-    _field = fillFlood(field, 14, 39, emptyMarker, "e")
-    filledFields.append(_field)
+        # Liste mit leerem Feld erweitern
+        emptyFields.append(control.convertFileToField(filename[0], emptyMarker, filledMarker))
 
-    # Erzeuge Spielfeld aus field2.txt Datei
-    field = convertFileToField("field2.txt", emptyMarker, filledMarker)
-    copyFields.append(copy.deepcopy(field))
-    _field= fillFlood(field, 7, 3, emptyMarker, "e")
-    filledFields.append(_field)
+        end = timer()
+        print("Zeit convertFiletoField für Feld Nr. %i [in s]: " % _emptyFieldCounter, end - start)
+        
 
-    # Erzeuge Spielfeld aus field3.txt Datei
-    field = convertFileToField("field3.txt", emptyMarker, filledMarker)
-    copyFields.append(copy.deepcopy(field))
-    _field = fillFlood(field, 15, 20, emptyMarker, "e")
-    filledFields.append(_field)
-
-     # Erzeuge Spielfeld aus monalisatxt Datei
-    field = convertFileToField("monalisa.txt", emptyMarker, filledMarker)
-    # deep copy by value ;; not by reference
-    copyFields.append(copy.deepcopy(field))
-    _field = fillFlood(field, 41, 65, emptyMarker, "e")
-    filledFields.append(_field)
-     
-     # Erzeuge Spielfeld aus monalisatxt Datei
-    field = convertFileToField("laby1.txt", emptyMarker, filledMarker)
-    copyFields.append(copy.deepcopy(field))
-    _field = fillFlood(field, 7, 22, emptyMarker, "e")
-    filledFields.append(_field)
+        try:
+            # Liste mit gefülltem Feld erweitern
+            filledFields.append(control.fillFlood(emptyFields[_emptyFieldCounter], control.randomStartPoint(emptyFields[_emptyFieldCounter]), emptyMarker, filledMarker))
+            #control.randomStartPoint(emptyFields[_emptyFieldCounter])
+            _emptyFieldCounter = _emptyFieldCounter + 1
+        except:
+             e = sys.exc_info()[0]
+             print(e)
+             e = sys.exc_info()[1]
+             print(e)
+             e = sys.exc_info()[2]
+             print(e)
     
-    if not VISUAL:
-        # Gebe alle fertigen Felder aus
-        for i,j in zip(filledFields, copyFields):
+    # Ausgabe der Felder
+    if not control.VISUAL:
+        for i,j in zip(filledFields, emptyFields):
             print("\n\n\n")
-            #printField(i)
-            doublePrint(j, i)
-    
+            control.printField(i)
+            #control.doublePrint(j, i)
 
+    
+     
 main()

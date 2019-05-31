@@ -16,13 +16,13 @@ import colorama
 import random
 
 # GLOBALE DEFINITION 
-RED = '\033[31m'    # mode 31 = red forground
-RESET = '\033[0m'   # mode 0  = reset
+RED = '\033[31m'        # mode 31 = red forground
+RESET = '\033[0m'       # mode 0  = reset
 
 # ==== INFO ====
-MAX_TIME = 0.01      # Verlangsame die Ausgabe im cmd Fenster
-VISUAL = 0          # Zur visuellen Darstellung aller Einzelschritte auf <1> setzen (lange Ausführzeit)
-COLOR = 1            # Füllung der Felder gefärbt. Setze <0> um Ausführzeit gegebenenfalls zu verkürzen
+MAX_TIME = 0.01         # Verlangsame die Ausgabe im cmd Fenster
+VISUAL = 0              # Zur visuellen Darstellung aller Einzelschritte auf <1> setzen (lange Ausfï¿½hrzeit)
+COLOR = 1               # Fï¿½llung der Felder gefï¿½rbt. Setze <0> um Ausfï¿½hrzeit gegebenenfalls zu verkï¿½rzen
 
 def printField(field):
     ''' Docstring'''
@@ -114,7 +114,7 @@ def convertFileToField(filename, emptyMarker, filledMarker):
 
     f.close() 
 
-    # Fülle Feld
+    # Fï¿½lle Feld
     f = open(filename, "r")
     line = f.readline()
     

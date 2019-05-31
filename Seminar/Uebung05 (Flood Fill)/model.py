@@ -13,7 +13,7 @@
 def defaultField():
     ''' Docstring'''
 
-    # Spielfeldgröße
+    # Spielfeldgrï¿½ï¿½e
     numberOfColumns = 20    # Spalten
     numberOfRows = 10       # Zeilen
 
@@ -22,7 +22,7 @@ def defaultField():
 
     # Erzeuge generische Liste
     field = []
-    # Enthält fertige gefüllte Felder
+    # Enthï¿½lt fertige gefï¿½llte Felder
     filledFields = []
     # Clean deep copy
     copyFields = []

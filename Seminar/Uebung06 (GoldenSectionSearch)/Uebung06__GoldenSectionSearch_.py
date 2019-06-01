@@ -14,6 +14,7 @@
 # https://www.tu-ilmenau.de/fileadmin/media/simulation/Lehre/Vorlesungsskripte/OPT1/OS1-kapitel-5.pdf
 # https://stackoverflow.com/questions/48847962/what-does-o-mean-in-matplotlibs-plot-function
 # https://matplotlib.org/users/pyplot_tutorial.html
+# https://python-reference.readthedocs.io/en/latest/docs/str/formatting.html
 
 
 import matplotlib.pyplot
@@ -26,7 +27,14 @@ def _plot(a, b, minimum):
     ''' Docstring '''
     
     # Allg. Definition
-    intervall = (a - 3, b + 3)
+    intervall = (a - 3, b + 3)      # Erweiter Intervall zum Plotten
+    _height = 1                     # Hilfsvariable
+
+    # Bestimme Maximum zum Plotten der Intervallhoehe
+    if abs(a) > abs(b):
+        _height = a * 1.1
+    else:
+        _height = b * 1.1
 
     fig = matplotlib.pyplot.figure()
     ax = fig.add_subplot(1,1,1)
@@ -35,8 +43,11 @@ def _plot(a, b, minimum):
     ax.plot([i for i in range(intervall[0], intervall[1])], [func(i) for i in range(intervall[0], intervall[1])], color='c')
     # Minimum plotten
     ax.plot(minimum, func(minimum), 'o', color='m')
+    # Initial Intervall
+    ax.plot([a] * int(func(_height)), [i for i in range(0, int(func(_height)))], '--', color='r')
+    ax.plot([b] * int(func(_height)), [i for i in range(0, int(func(_height)))], '--', color='r')
 
-    ax.legend(['(x+1/3)**2', 'Minimum'])
+    ax.legend(['(x+1/3)**2', 'Minimum: %.3g' % minimum, 'Intervallgrenzen'])
     ax.set_xlabel('x')
     ax.set_ylabel('f(x)')
     matplotlib.pyplot.show()
@@ -45,7 +56,7 @@ def goldenSearch(a, b):
     ''' Docstring '''
 
     # Definition
-    phi = 0.618     # Kehrwert der <GoldenRatio>
+    phi = ((1+(5**0.5))*0.5) - 1     # Kehrwert der <GoldenRatio> # 0.618
     epsilon = 0.001 # Genauigkeit
     minimum = -1
 

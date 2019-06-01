@@ -21,8 +21,8 @@ RESET = '\033[0m'       # mode 0  = reset
 
 # ==== INFO ====
 MAX_TIME = 0.01         # Verlangsame die Ausgabe im cmd Fenster
-VISUAL = 0              # Zur visuellen Darstellung aller Einzelschritte auf <1> setzen (lange Ausf�hrzeit)
-COLOR = 1               # F�llung der Felder gef�rbt. Setze <0> um Ausf�hrzeit gegebenenfalls zu verk�rzen
+VISUAL = 0              # Zur visuellen Darstellung aller Einzelschritte auf <1> setzen (lange Ausfuehrzeit)
+COLOR = 1               # Fuellung der Felder gefaerbt. Setze <0> um Ausfuehrzeit gegebenenfalls zu verkuerzen
 
 def printField(field):
     ''' Docstring'''
@@ -133,8 +133,8 @@ def randomStartPoint(field):
     check = -1
 
     while check is -1 :
-        x = random.randint(0, len(field) - 5)
-        y = random.randint(0, len(field[x]) - 5)
+        x = random.randint(0, len(field) - 1)
+        y = random.randint(0, len(field[x]) - 1)
 
         if field[x][y] == " ":
             check = 0

@@ -72,7 +72,5 @@ def main():
             print("\n\n\n")
             control.printField(i)
             #control.doublePrint(j, i)
-
-    
-     
+   
 main()

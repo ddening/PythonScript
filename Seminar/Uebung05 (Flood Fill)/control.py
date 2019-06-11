@@ -21,8 +21,8 @@ RESET = '\033[0m'       # mode 0  = reset
 
 # ==== INFO ====
 MAX_TIME = 0.01         # Verlangsame die Ausgabe im cmd Fenster
-VISUAL = 0              # Zur visuellen Darstellung aller Einzelschritte auf <1> setzen (lange Ausfuehrzeit)
-COLOR = 1               # Fuellung der Felder gefaerbt. Setze <0> um Ausfuehrzeit gegebenenfalls zu verkuerzen
+VISUAL = 1              # Zur visuellen Darstellung aller Einzelschritte auf <1> setzen (lange Ausfuehrzeit)
+COLOR = 1            # Fuellung der Felder gefaerbt. Setze <0> um Ausfuehrzeit gegebenenfalls zu verkuerzen
 
 def printField(field):
     ''' Docstring'''

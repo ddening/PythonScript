@@ -65,7 +65,7 @@ def goldenSearch(a, b):
         return -1
 
     # Abbruchkriterium
-    while b -a > epsilon:
+    while b - a > epsilon:
 
         # Strecke maximal
         s = b - a

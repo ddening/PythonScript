@@ -3,18 +3,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>26a34dec-ffba-4ee0-8584-aca6d0598345</ProjectGuid>
+    <ProjectGuid>6d329127-201b-4e72-8b50-e9d9396db151</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Uebung05__Flood_Fill_.py</StartupFile>
+    <StartupFile>Uebung07__Testat01_.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Uebung05 (Flood Fill)</Name>
-    <RootNamespace>Uebung05 (Flood Fill)</RootNamespace>
-    <IsWindowsApplication>False</IsWindowsApplication>
-    <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
-    <InterpreterVersion>3.5</InterpreterVersion>
+    <Name>Uebung07 (Testat01)</Name>
+    <RootNamespace>Uebung07 (Testat01)</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,26 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="control.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="model.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Uebung05__Flood_Fill_.py" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="field.txt" />
-    <Content Include="field2.txt" />
-    <Content Include="field3.txt" />
-    <Content Include="laby1.txt">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Laufzeiten.txt" />
-    <Content Include="monalisa.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\3.5" />
+    <Compile Include="Uebung07__Testat01_.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

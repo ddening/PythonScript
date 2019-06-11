@@ -15,6 +15,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Uebung05 (Flood Fill)", "Ue
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Uebung06 (GoldenSectionSearch)", "Uebung06 (GoldenSectionSearch)\Uebung06 (GoldenSectionSearch).pyproj", "{DC7DD156-C159-4EBC-AA09-23725D1B28F9}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Uebung07 (Testat01)", "Uebung07 (Testat01)\Uebung07 (Testat01).pyproj", "{6D329127-201B-4E72-8B50-E9D9396DB151}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,8 @@ Global
 		{26A34DEC-FFBA-4EE0-8584-ACA6D0598345}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC7DD156-C159-4EBC-AA09-23725D1B28F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC7DD156-C159-4EBC-AA09-23725D1B28F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D329127-201B-4E72-8B50-E9D9396DB151}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D329127-201B-4E72-8B50-E9D9396DB151}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

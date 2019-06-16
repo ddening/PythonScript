@@ -20,12 +20,11 @@ def selectionSort(arr):
 
     Returns:
         time (float): Benoetigte Zeit um Liste zu sortieren
-    
     '''
     
     _start = time.clock()
 
-    # Startposition für Suche nach dem Minimum -- S = [ leer ] -- U = [ alle Elemente aus arr]
+    # Startposition fuer Suche nach dem Minimum -- S = [ leer ] -- U = [ alle Elemente aus arr]
     currentIdx = 0
     # Laenge der Liste
     lstLength = len(arr)

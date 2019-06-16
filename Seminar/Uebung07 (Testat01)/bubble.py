@@ -21,7 +21,6 @@ def bubbleSort(arr):
 
     Returns:
         time (float): Benoetigte Zeit um Liste zu sortieren
-    
     '''
 
     _start = time.clock()

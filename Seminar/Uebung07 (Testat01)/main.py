@@ -13,6 +13,7 @@
 # https://www.inf-schule.de/grenzen/komplexitaet/sortieren/sortieralgorithmen/selectionsort
 # https://stackoverflow.com/questions/3898572/what-is-the-standard-python-docstring-format
 # https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html#example-google
+# https://de.wikiversity.org/wiki/Kurs:Algorithmen_und_Datenstrukturen/Vorlesung/InsertionSort
 
 # Libraries
 import random
@@ -24,6 +25,7 @@ import selection
 
 # Globale scope
 MAX_NUMBERS_IN_LIST = 100 + 1
+MAX_INTERV = 99
 
 def testListsGenerator(MAX_NUMBERS_IN_LIST):
     '''Erzeugt Liste mit Listen, welche zufaellige Zahlen beinhalten
@@ -39,7 +41,7 @@ def testListsGenerator(MAX_NUMBERS_IN_LIST):
     myList = []
 
     # Fülle Liste mit zufälligen Zahlen zwischen 0 und x
-    myList = [random.randint(0, 99) for i in range(0, MAX_NUMBERS_IN_LIST)]
+    myList = [random.randint(0, MAX_INTERV) for i in range(0, MAX_NUMBERS_IN_LIST)]
 
     return myList
     
@@ -58,12 +60,14 @@ def plot():
 
     # Funktion [x ; y]
     # x: Anzahl der Elemente -- y: Zeit zum sortieren
-
     ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [bubble.bubbleSort(j) for j in bubbleLst],  '.', color='c', )
     ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [insertion.insertionSort(j) for j in insertionLst],  '.', color='m')
     ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [selection.selectionSort(j) for j in selectionLst],  '.', color='r', )
+    
+    
 
     # Legende
+    ax.set_title("Elemente in Liste im Intervall (0, %d)" % MAX_INTERV)
     ax.legend(['BubbleSort', 'InsertionSort', 'SelectionSort'])
     ax.set_xlabel('Anzahl Elemente in Liste')
     ax.set_ylabel('Sortierzeit in s')

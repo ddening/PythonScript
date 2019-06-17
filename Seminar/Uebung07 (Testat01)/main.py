@@ -27,6 +27,17 @@ import selection
 MAX_NUMBERS_IN_LIST = 100 + 1
 MAX_INTERV = 99
 
+def _createList(MAX_NUMBERS_IN_LIST):
+    '''Hilfsfunktion um eine einzige Liste mit zufaelligen Werten zu erstellen'''
+
+    # Definition einer leeren Liste
+    myList = []
+
+    # Fülle Liste mit zufälligen Zahlen zwischen 0 und x
+    myList = [random.randint(0, MAX_INTERV) for i in range(0, MAX_NUMBERS_IN_LIST)]
+
+    return myList
+  
 def testListsGenerator(MAX_NUMBERS_IN_LIST):
     '''Erzeugt Liste mit Listen, welche zufaellige Zahlen beinhalten
 
@@ -37,14 +48,12 @@ def testListsGenerator(MAX_NUMBERS_IN_LIST):
         lst: Liste bestehend aus anderen Listen mit zufaelligen Zahlen gefuellt
     '''
 
-    # Definition einer leeren Liste
-    myList = []
-
-    # Fülle Liste mit zufälligen Zahlen zwischen 0 und x
-    myList = [random.randint(0, MAX_INTERV) for i in range(0, MAX_NUMBERS_IN_LIST)]
-
-    return myList
+    lst = []
+    for i in range(0, MAX_NUMBERS_IN_LIST):
+        lst.append(_createList(i))
     
+    return lst
+  
 def plot():
     '''Plottet die Laufzeiten der Sortierverfahren in einem Diagramm '''
 
@@ -52,11 +61,17 @@ def plot():
     ax = fig.add_subplot(1,1,1)
 
     # Initialliste
-    bubbleLst = [testListsGenerator(i) for i in range(0, MAX_NUMBERS_IN_LIST)]
-    # Kopie für InsertionSort
-    insertionLst = copy.deepcopy(bubbleLst)
-    # Kopie für SelectionSort
-    selectionLst = copy.deepcopy(bubbleLst)
+    ogLst = testListsGenerator(MAX_NUMBERS_IN_LIST)
+    # Kopie fuer Bubblesort
+    bubbleLst = copy.deepcopy(ogLst)
+    # Kopie fuer InsertionSort
+    insertionLst = copy.deepcopy(ogLst)
+    # Kopie fuer SelectionSort
+    selectionLst = copy.deepcopy(ogLst)
+    # Kopie fuer MergeSort
+    mergeLst = copy.deepcopy(ogLst)
+    # Kopie fuer QuickSort
+    quickLst = copy.deepcopy(ogLst)
 
     # Funktion [x ; y]
     # x: Anzahl der Elemente -- y: Zeit zum sortieren
@@ -64,8 +79,6 @@ def plot():
     ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [insertion.insertionSort(j) for j in insertionLst],  '.', color='m')
     ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [selection.selectionSort(j) for j in selectionLst],  '.', color='r', )
     
-    
-
     # Legende
     ax.set_title("Elemente in Liste im Intervall (0, %d)" % MAX_INTERV)
     ax.legend(['BubbleSort', 'InsertionSort', 'SelectionSort'])
@@ -76,5 +89,7 @@ def plot():
 def main():
     '''Main Funktion '''
     plot()
+    #bubble.bubbleSort(testListsGenerator(3))
+    #createList(MAX_NUMBERS_IN_LIST)
 
 main()

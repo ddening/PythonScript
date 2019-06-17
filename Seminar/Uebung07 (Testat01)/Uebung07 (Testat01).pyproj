@@ -29,6 +29,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />
+    <Compile Include="merge.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="quick.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="selection.py">
       <SubType>Code</SubType>
     </Compile>

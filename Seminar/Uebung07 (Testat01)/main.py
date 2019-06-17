@@ -24,7 +24,7 @@ import insertion
 import selection
 
 # Globale scope
-MAX_NUMBERS_IN_LIST = 100 + 1
+MAX_NUMBERS_IN_LIST = 50 + 1
 MAX_INTERV = 99
 
 def testListsGenerator(MAX_NUMBERS_IN_LIST):

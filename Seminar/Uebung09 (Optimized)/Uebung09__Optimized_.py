@@ -10,12 +10,12 @@
 # Quellen:
 
 import sys
-# import colorama
+import colorama
 import copy
 
 # GLOBALE DEFINITION 
-# RED = '\033[31m'        # mode 31 = red forground
-# RESET = '\033[0m'       # mode 0  = reset
+RED = '\033[31m'        # mode 31 = red forground
+RESET = '\033[0m'       # mode 0  = reset
 
 def printField(field):
     ''' Gibt das Spielfeld in der Konsole aus
@@ -151,7 +151,7 @@ def findEscape(arr, rowNumber, colNumber, route = (), visited = [], sol = []):
         sol.append(route)
         return route
 
-    if nodeVisited(rowNumber, colNumber, route):
+    if nodeVisited(rowNumber, colNumber, visited):
         return
 
     if not isFree(rowNumber, colNumber, arr):
@@ -183,7 +183,7 @@ def main():
     global escapeSymbol
 
     # Init
-    # colorama.init()
+    colorama.init()
     sys.setrecursionlimit(10000)
 
     # Definition der Variablen
@@ -193,11 +193,16 @@ def main():
 
     # Erstelle Feld + Ausgabe
     arr = convertFileToField("field3.txt", emptyMarker, filledMarker)
-    _arr = copy.deepcopy(arr)
-    #printField(arr)
+    printField(arr)
 
-    b = findEscape(arr, 1, 1)
-    print(b)
+    # Finde alle Pfade
+    paths = findEscape(arr, 1, 1)
+    # Bestimme kuerzesten Pfad
+    sPath = min(paths, key = len)
+
+    # Pfaddarstellung im Feld
+    fillField(arr, sPath)
+    printField(arr)
 
 if __name__ == "__main__":
     main()

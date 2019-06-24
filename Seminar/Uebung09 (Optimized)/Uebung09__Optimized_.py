@@ -141,20 +141,28 @@ def _findEscape(arr, rowNumber, colNumber, route = (), visited = [], sol = []):
     '''Hilfsfunktion liefert alle moeglichen Pfade die Loesung sind'''
 
     # Ausserhalb des Feldes
-    if rowNumber < 0 or rowNumber >= len(arr) or colNumber < 0 or colNumber >= len(arr[rowNumber]):
+    if rowNumber < 0 or rowNumber >= len(arr) - 1 or colNumber < 0 or colNumber >= len(arr[rowNumber]):
         return
 
-    # Definition
+    # Definition  
+    global sol_len
     stack = []
-    escapeRoutes = []
+
+    # Falls Loesungspfad und dessen Laenge bereits ex.
+    if sol_len:
+        # Falls derzeitige Route bereits laenger als vorhandene Loesung
+        if len(route) > sol_len:    
+            return
 
     # Ist aktuelle Zelle Ausgang? -> Ja: Speicher Pfad ab und return
     if isEscape(rowNumber, colNumber, arr):
+        sol_len = len(route)
+        print("Laenge des Pfades: ", sol_len)
         sol.append(route)
         return route
 
     # Verhindert Loop-Schleifen, falls Kindknoten wieder zum Elternknoten zeigt
-    if nodeVisited(rowNumber, colNumber, visited):
+    if nodeVisited(rowNumber, colNumber, route):
         return
     # Falls Feld bereits belegt -- return
     if not isFree(rowNumber, colNumber, arr):
@@ -162,13 +170,12 @@ def _findEscape(arr, rowNumber, colNumber, route = (), visited = [], sol = []):
 
     # Fuege Pfadpunkt zu Route hinzu
     route += ((rowNumber, colNumber), )
-    # stack.append((rowNumber, colNumber))
     visited.append((rowNumber, colNumber))
 
     _findEscape(arr, rowNumber + 1, colNumber, route, visited, sol)
-    _findEscape(arr, rowNumber - 1, colNumber, route, visited, sol)
-    _findEscape(arr, rowNumber, colNumber + 1, route, visited, sol)
     _findEscape(arr, rowNumber, colNumber - 1, route, visited, sol)
+    _findEscape(arr, rowNumber, colNumber + 1, route, visited, sol)
+    _findEscape(arr, rowNumber - 1, colNumber, route, visited, sol)
 
     return sol
 
@@ -176,8 +183,10 @@ def findEscape(arr, rowNumber, colNumber, route = ()):
     '''Liefert kuerzesten Pfad als Loesung'''
     # Alle Loesungen die zum Ausgang fuehren
     paths = _findEscape(arr, rowNumber, colNumber)
+    print("Anzahl an Lösungen gefunden: ", len(paths))
     # Bestimmte kuerzesten Pfad
     sPath = min(paths, key = len)
+    print("Route: ", sPath)
 
     return sPath
     
@@ -192,6 +201,7 @@ def main():
     # Globale Variablen
     global filledMarker
     global escapeSymbol
+    global sol_len
 
     # Init
     colorama.init()
@@ -201,10 +211,11 @@ def main():
     emptyMarker = ''
     filledMarker = 'x'
     escapeSymbol = 'E'
+    sol_len = 0
 
     # Erstelle Feld + Ausgabe
-    arr = convertFileToField("field3.txt", emptyMarker, filledMarker)
-    printField(arr)
+    arr = convertFileToField("field2.txt", emptyMarker, filledMarker)
+    # printField(arr)
 
     _start = time.clock()
     # Finde alle Pfade

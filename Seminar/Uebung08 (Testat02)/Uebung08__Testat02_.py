@@ -1,4 +1,4 @@
-# Seminar Uebung 08 (Testa02)                         
+# Seminar Uebung 09 (Testa02 - Optimized)                         
 #  _____________________________________
 #                                       
 #          /               ,            
@@ -11,6 +11,8 @@
 
 import sys
 import colorama
+import copy
+import time
 
 # GLOBALE DEFINITION 
 RED = '\033[31m'        # mode 31 = red forground
@@ -30,6 +32,7 @@ def printField(field):
         for j in range(0, len(field[i])):
             _string = _string + field[i][j]
         print(_string)
+    print()
 
 def _searchMaxLine(filename):
     ''' Hilfsfunktion fuer convertFileToField, welche die Laengste Zeile eines Bildes/Feldes ermittelt
@@ -122,42 +125,61 @@ def isEscape(rowNumber, colNumber, arr):
     else:
         return False
 
-def pathVisited(rowNumber, colNumber, route):
+def nodeVisited(rowNumber, colNumber, route):
     '''Docstring'''
     if (rowNumber, colNumber) in route:
         return True
     else:
         return False  
 
-def findEscape(rowNumber, colNumber, arr, route=(), solutionPath = []):
-    '''Docstring'''
+def isDeadEnd(rowNumber, colNumber, _arr):
+    # Wenn alle Felder umherum belegt -> True
+    if (isFree(rowNumber + 1, colNumber, _arr) and isFree(rowNumber - 1, colNumber, _arr) and isFree(rowNumber, colNumber + 1, _arr) and isFree(rowNumber, colNumber - 1, _arr)):
+        return False
+
+def _findEscape(arr, rowNumber, colNumber, route = (), visited = [], sol = []):
+    '''Hilfsfunktion liefert alle moeglichen Pfade die Loesung sind'''
 
     # Ausserhalb des Feldes
     if rowNumber < 0 or rowNumber >= len(arr) or colNumber < 0 or colNumber >= len(arr[rowNumber]):
         return
 
-    if pathVisited(rowNumber, colNumber, route):
-        return
+    # Definition
+    stack = []
+    escapeRoutes = []
 
-    # Abbruchkriterium
+    # Ist aktuelle Zelle Ausgang? -> Ja: Speicher Pfad ab und return
     if isEscape(rowNumber, colNumber, arr):
-        # route = route + ((rowNumber, colNumber), )
-        solutionPath.append(route)
-        # print("Route zum Ziel: ", route)
-        return
+        sol.append(route)
+        return route
 
+    # Verhindert Loop-Schleifen, falls Kindknoten wieder zum Elternknoten zeigt
+    if nodeVisited(rowNumber, colNumber, route):
+        return
+    # Falls Feld bereits belegt -- return
     if not isFree(rowNumber, colNumber, arr):
         return
 
-    route = route + ((rowNumber, colNumber), )
-    # print("Route Tupel: ", route)
+    # Fuege Pfadpunkt zu Route hinzu
+    route += ((rowNumber, colNumber), )
+    # stack.append((rowNumber, colNumber))
+    visited.append((rowNumber, colNumber))
 
-    findEscape(rowNumber - 1, colNumber, arr, route)
-    findEscape(rowNumber, colNumber - 1, arr, route)
-    findEscape(rowNumber + 1, colNumber, arr, route)
-    findEscape(rowNumber, colNumber + 1, arr, route)
+    _findEscape(arr, rowNumber + 1, colNumber, route, visited, sol)
+    _findEscape(arr, rowNumber - 1, colNumber, route, visited, sol)
+    _findEscape(arr, rowNumber, colNumber + 1, route, visited, sol)
+    _findEscape(arr, rowNumber, colNumber - 1, route, visited, sol)
 
-    return solutionPath
+    return sol
+
+def findEscape(arr, rowNumber, colNumber, route = ()):
+    '''Liefert kuerzesten Pfad als Loesung'''
+    # Alle Loesungen die zum Ausgang fuehren
+    paths = _findEscape(arr, rowNumber, colNumber)
+    # Bestimmte kuerzesten Pfad
+    sPath = min(paths, key = len)
+
+    return sPath
     
 def fillField(arr, path):
     ''' Visuelle Darstellung des Loesungspfades'''
@@ -184,13 +206,15 @@ def main():
     arr = convertFileToField("field2.txt", emptyMarker, filledMarker)
     printField(arr)
 
+    _start = time.clock()
     # Finde alle Pfade
-    paths = findEscape(1, 1, arr)
-    # Bestimme kuerzesten Pfad
-    sPath = min(paths, key = len)
+    _t = findEscape(arr, 1, 1)
+    _end = time.clock()
+
+    print("Zeit um Pfad zu bestimmen [in s]: ", _end-_start)
 
     # Pfaddarstellung im Feld
-    fillField(arr, sPath)
+    fillField(arr, _t)
     printField(arr)
 
 if __name__ == "__main__":

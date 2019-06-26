@@ -137,47 +137,43 @@ def isDeadEnd(rowNumber, colNumber, _arr):
     if (isFree(rowNumber + 1, colNumber, _arr) and isFree(rowNumber - 1, colNumber, _arr) and isFree(rowNumber, colNumber + 1, _arr) and isFree(rowNumber, colNumber - 1, _arr)):
         return False
 
-def _findEscape(arr, rowNumber, colNumber, route = (), visited = [], sol = []):
+def _findEscape(arr, rowNumber, colNumber, route = ()):
     '''Hilfsfunktion liefert alle moeglichen Pfade die Loesung sind'''
 
     # Ausserhalb des Feldes
     if rowNumber < 0 or rowNumber >= len(arr) - 1 or colNumber < 0 or colNumber >= len(arr[rowNumber]):
         return
 
-    # Definition  
-    global sol_len
-    stack = []
-
-    # Falls Loesungspfad und dessen Laenge bereits ex.
-    if sol_len:
-        # Falls derzeitige Route bereits laenger als vorhandene Loesung
-        if len(route) > sol_len:    
-            return
+    route += ((rowNumber, colNumber), )
 
     # Ist aktuelle Zelle Ausgang? -> Ja: Speicher Pfad ab und return
     if isEscape(rowNumber, colNumber, arr):
-        sol_len = len(route)
-        print("Laenge des Pfades: ", sol_len)
-        sol.append(route)
         return route
 
-    # Verhindert Loop-Schleifen, falls Kindknoten wieder zum Elternknoten zeigt
-    if nodeVisited(rowNumber, colNumber, route):
-        return
-    # Falls Feld bereits belegt -- return
-    if not isFree(rowNumber, colNumber, arr):
-        return
+    steps = ((0,1), (0, -1), (1, 0), (-1, 0))
+    myRoutes = []
 
-    # Fuege Pfadpunkt zu Route hinzu
-    route += ((rowNumber, colNumber), )
-    visited.append((rowNumber, colNumber))
+    for s in steps:
+        newRow = rowNumber + s[0]
+        newCol = colNumber + s[1]
 
-    _findEscape(arr, rowNumber + 1, colNumber, route, visited, sol)
-    _findEscape(arr, rowNumber, colNumber - 1, route, visited, sol)
-    _findEscape(arr, rowNumber, colNumber + 1, route, visited, sol)
-    _findEscape(arr, rowNumber - 1, colNumber, route, visited, sol)
+        if isFree(newRow, newCol, arr) and not nodeVisited(newRow, newCol, route):
+            _route = copy.deepcopy(route)
+            _tempRoute = _findEscape(arr, newRow, newCol, _route)
 
-    return sol
+            # Vermeide leere Liste
+            if len(_tempRoute) > 0:
+                myRoutes.append(_tempRoute)
+            
+
+    # Falls keine Bewegung moeglich        
+    if len(myRoutes) == 0:
+        return ()
+
+    # Bestimme Minimum
+    sPath = min(myRoutes, key = len)
+
+    return sPath
 
 def findEscape(arr, rowNumber, colNumber, route = ()):
     '''Liefert kuerzesten Pfad als Loesung'''
@@ -201,7 +197,6 @@ def main():
     # Globale Variablen
     global filledMarker
     global escapeSymbol
-    global sol_len
 
     # Init
     colorama.init()
@@ -217,12 +212,8 @@ def main():
     arr = convertFileToField("field2.txt", emptyMarker, filledMarker)
     # printField(arr)
 
-    _start = time.clock()
-    # Finde alle Pfade
-    _t = findEscape(arr, 1, 1)
-    _end = time.clock()
-
-    print("Zeit um Pfad zu bestimmen [in s]: ", _end-_start)
+    _t = _findEscape(arr, 1, 1)
+    print(_t)
 
     # Pfaddarstellung im Feld
     fillField(arr, _t)

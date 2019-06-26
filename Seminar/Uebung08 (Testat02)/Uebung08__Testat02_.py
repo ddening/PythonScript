@@ -154,6 +154,7 @@ def _findEscape(arr, rowNumber, colNumber, route = (), visited = [], sol = []):
     if isEscape(rowNumber, colNumber, arr):
         print("Laenge des Pfades: ", len(route))
         sol.append(route)
+
         return True
 
     # Verhindert Loop-Schleifen, falls Kindknoten wieder zum Elternknoten zeigt

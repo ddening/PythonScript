@@ -23,7 +23,7 @@ def bubbleSort(arr):
         time (float): Benoetigte Zeit um Liste zu sortieren
     '''
 
-    _start = time.clock()
+    _start = time.perf_counter()
 
     n = len(arr)
 
@@ -32,7 +32,7 @@ def bubbleSort(arr):
             if arr[j] > arr[j+1]:
                 arr[j], arr[j+1] = arr[j+1], arr[j]
 
-    _end = time.clock()
+    _end = time.perf_counter()
     _time = _end - _start
 
     return _time

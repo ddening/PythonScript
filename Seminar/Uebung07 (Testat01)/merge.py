@@ -36,8 +36,6 @@ def mergeSortedLists(A, B):
 
 def mergeSort(A):
 
-    _start = time.clock()
-
     if len(A) <= 1: # Basisfall
         return A
     else:
@@ -45,8 +43,6 @@ def mergeSort(A):
         leftHalf = mergeSort(A[:mid])
         rightHalf = mergeSort(A[mid:])
         newList = mergeSortedLists(leftHalf, rightHalf)
-
-    _end = time.clock()
 
     return newList
 

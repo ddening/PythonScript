@@ -13,12 +13,12 @@ import time
 
 def quickSort(A):
 
-    _start = time.clock()
+    _start = time.perf_counter()
 
     n = len(A)
     recQuickSort(A, 0, n-1)
 
-    _end = time.clock()
+    _end = time.perf_counter()
 
     return _end - _start
 
@@ -36,14 +36,14 @@ def partitionArray(A, first, last):
     left = first + 1
     right = last
     while left <= right: # solange Partitionierung nicht abgeschlossen
-        while (left <= right) and (A[left] < pivot):# finde Schlüssel größer Pivot
+        while (left <= right) and (A[left] < pivot):# finde Schlï¿½ssel grï¿½ï¿½er Pivot
             left += 1
-        while (right >= left) and (A[right] >= pivot): # finde Schlüssel kleiner Pivot
+        while (right >= left) and (A[right] >= pivot): # finde Schlï¿½ssel kleiner Pivot
             right -= 1
-        if left < right:# vertausche beide Schlüssel falls Partitionierung noch nicht beendet
+        if left < right:# vertausche beide Schlï¿½ssel falls Partitionierung noch nicht beendet
             A[left], A[right] = A[right], A[left]
     if right != first: # Pivot-Element an die richtigeStellebringen
         A[first] = A[right]
         A[right] = pivot
 
-    return right # liefere Position des Pivot-Elements zurück
+    return right # liefere Position des Pivot-Elements zurï¿½ck

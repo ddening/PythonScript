@@ -28,8 +28,9 @@ import merge
 import quick
 
 # Globale scope
-MAX_NUMBERS_IN_LIST = 100 + 1
+MAX_NUMBERS_IN_LIST = 300 + 1
 MAX_INTERV = 99
+
 
 def _createList(MAX_NUMBERS_IN_LIST):
     '''Hilfsfunktion um eine einzige Liste mit zufaelligen Werten zu erstellen'''
@@ -63,9 +64,9 @@ def measureTime(algoList):
     lstTime = []    # Liste mit Laufzeiten abhaengig von der Laenge der Liste
 
     for _list in algoList:
-        s = time.clock()
+        s = time.perf_counter()
         merge.mergeSort(_list)
-        e = time.clock()
+        e = time.perf_counter()
         diff = e - s
         lstTime.append(diff)
 

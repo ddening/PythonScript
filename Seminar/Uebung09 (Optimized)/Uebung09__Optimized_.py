@@ -152,6 +152,7 @@ def _findEscape(arr, rowNumber, colNumber, route = ()):
 
     steps = ((0,1), (0, -1), (1, 0), (-1, 0))
     myRoutes = []
+    # 
 
     for s in steps:
         newRow = rowNumber + s[0]

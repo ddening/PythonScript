@@ -16,16 +16,21 @@
 # https://de.wikiversity.org/wiki/Kurs:Algorithmen_und_Datenstrukturen/Vorlesung/InsertionSort
 
 # Libraries
+import time
 import random
+import math
 import matplotlib.pyplot
 import copy
 import bubble
 import insertion
 import selection
+import merge
+import quick
 
 # Globale scope
-MAX_NUMBERS_IN_LIST = 100 + 1
+MAX_NUMBERS_IN_LIST = 300 + 1
 MAX_INTERV = 99
+
 
 def _createList(MAX_NUMBERS_IN_LIST):
     '''Hilfsfunktion um eine einzige Liste mit zufaelligen Werten zu erstellen'''
@@ -53,6 +58,19 @@ def testListsGenerator(MAX_NUMBERS_IN_LIST):
         lst.append(_createList(i))
     
     return lst
+
+def measureTime(algoList):
+    '''Hilfsfunktion um Laufzeit von MergeSort zu messen'''
+    lstTime = []    # Liste mit Laufzeiten abhaengig von der Laenge der Liste
+
+    for _list in algoList:
+        s = time.perf_counter()
+        merge.mergeSort(_list)
+        e = time.perf_counter()
+        diff = e - s
+        lstTime.append(diff)
+
+    return lstTime
   
 def plot():
     '''Plottet die Laufzeiten der Sortierverfahren in einem Diagramm '''
@@ -78,10 +96,13 @@ def plot():
     ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [bubble.bubbleSort(j) for j in bubbleLst],  '.', color='c', )
     ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [insertion.insertionSort(j) for j in insertionLst],  '.', color='m')
     ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [selection.selectionSort(j) for j in selectionLst],  '.', color='r', )
+    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [quick.quickSort(j) for j in quickLst],  '.', color='b', )
+    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], measureTime(mergeLst),  '.', color='y', )
+    
     
     # Legende
     ax.set_title("Elemente in Liste im Intervall (0, %d)" % MAX_INTERV)
-    ax.legend(['BubbleSort', 'InsertionSort', 'SelectionSort'])
+    ax.legend(['BubbleSort', 'InsertionSort', 'SelectionSort', 'QuickSort', 'MergeSort'])
     ax.set_xlabel('Anzahl Elemente in Liste')
     ax.set_ylabel('Sortierzeit in s')
     matplotlib.pyplot.show()
@@ -89,7 +110,6 @@ def plot():
 def main():
     '''Main Funktion '''
     plot()
-    #bubble.bubbleSort(testListsGenerator(3))
-    #createList(MAX_NUMBERS_IN_LIST)
 
-main()
+if __name__ == "__main__":
+    main()

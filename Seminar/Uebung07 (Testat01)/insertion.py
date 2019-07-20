@@ -22,7 +22,7 @@ def insertionSort(arr):
         time (float): Benoetigte Zeit um Liste zu sortieren
     '''
 
-    _start = time.clock()
+    _start = time.perf_counter()
 
     # Durchlaufe jedes Element im Array
     for i in range(1, len(arr)):
@@ -36,7 +36,7 @@ def insertionSort(arr):
             arr[index_left] = element
             index_left = index_left - 1
 
-    _end = time.clock()
+    _end = time.perf_counter()
     _time = _end - _start
 
     return _time

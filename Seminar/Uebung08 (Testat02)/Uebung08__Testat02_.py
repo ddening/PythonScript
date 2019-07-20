@@ -212,10 +212,10 @@ def main():
     arr = convertFileToField("field2.txt", emptyMarker, filledMarker)
     # printField(arr)
 
-    _start = time.clock()
+    _start = time.perf_counter()
     # Finde alle Pfade
     _t = findEscape(arr, 1, 1)
-    _end = time.clock()
+    _end = time.perf_counter()
 
     print("Zeit um Pfad zu bestimmen [in s]: ", _end-_start)
 

@@ -22,7 +22,7 @@ def selectionSort(arr):
         time (float): Benoetigte Zeit um Liste zu sortieren
     '''
     
-    _start = time.clock()
+    _start = time.perf_counter()
 
     # Startposition fuer Suche nach dem Minimum -- S = [ leer ] -- U = [ alle Elemente aus arr]
     currentIdx = 0
@@ -41,7 +41,7 @@ def selectionSort(arr):
 
         currentIdx = currentIdx + 1
 
-    _end = time.clock()
+    _end = time.perf_counter()
     _time = _end - _start
 
     return _time

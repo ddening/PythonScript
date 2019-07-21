@@ -1,12 +1,12 @@
-# Seminar Uebung 07 (Testa01)                         
+# Seminar Uebung 07 (Testa01)
 #  _____________________________________
-#                                       
-#          /               ,            
+#
+#          /               ,
 #  ----__-/----__----__--------__----__-
 #    /   /   /___) /   ) /   /   ) /   )
 #  _(___/___(___ _/___/_/___/___/_(___/_
-#                                    /  
-#                                (_ /   
+#                                    /
+#                                (_ /
 # Quellen:
 
 import time
@@ -27,14 +27,17 @@ def recQuickSort(A, first, last):
     if first >= last:
         return
     else:
-        pivot= A[first]
+        pivot = A[first]
         pivotPos= partitionArray(A, first, last)
         recQuickSort(A, first, pivotPos-1)
         recQuickSort(A, pivotPos+ 1, last)
 
 def partitionArray(A, first, last):
+    a = A[first]
+    b = A[last // 2]
+    c = A[last]
 
-    pivot = A[first]
+    pivot = min(a, b, c)
     left = first + 1
     right = last
 

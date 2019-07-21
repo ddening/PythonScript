@@ -18,7 +18,6 @@
 # Libraries
 import time
 import random
-import math
 import matplotlib.pyplot
 import copy
 import bubble
@@ -26,10 +25,11 @@ import insertion
 import selection
 import merge
 import quick
+import quick_alt
 
 # Globale scope
-MAX_NUMBERS_IN_LIST = 300 + 1
-MAX_INTERV = 99
+MAX_NUMBERS_IN_LIST = 200 + 1
+MAX_INTERV = 1
 
 
 def _createList(MAX_NUMBERS_IN_LIST):
@@ -90,19 +90,21 @@ def plot():
     mergeLst = copy.deepcopy(ogLst)
     # Kopie fuer QuickSort
     quickLst = copy.deepcopy(ogLst)
+    quickLst2 = copy.deepcopy(ogLst)
 
     # Funktion [x ; y]
     # x: Anzahl der Elemente -- y: Zeit zum sortieren
-    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [bubble.bubbleSort(j) for j in bubbleLst],  '.', color='c', )
-    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [insertion.insertionSort(j) for j in insertionLst],  '.', color='m')
-    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [selection.selectionSort(j) for j in selectionLst],  '.', color='r', )
-    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [quick.quickSort(j) for j in quickLst],  '.', color='b', )
-    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], measureTime(mergeLst),  '.', color='y', )
+    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [bubble.bubbleSort(j) for j in bubbleLst],  '-', color='c', )
+    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [insertion.insertionSort(j) for j in insertionLst],  '-', color='m')
+    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [selection.selectionSort(j) for j in selectionLst],  '-', color='r', )
+    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], measureTime(mergeLst),  '-', color='y', )
+    ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [quick.quickSort(j) for j in quickLst], '-', color='b', )
+    # ax.plot([i for i in range(0, MAX_NUMBERS_IN_LIST)], [quick_alt.quickSort(j) for j in quickLst2],  '.')
     
     
     # Legende
     ax.set_title("Elemente in Liste im Intervall (0, %d)" % MAX_INTERV)
-    ax.legend(['BubbleSort', 'InsertionSort', 'SelectionSort', 'QuickSort', 'MergeSort'])
+    ax.legend(['BubbleSort', 'InsertionSort', 'SelectionSort', 'MergeSort', 'QuickSort'])
     ax.set_xlabel('Anzahl Elemente in Liste')
     ax.set_ylabel('Sortierzeit in s')
     matplotlib.pyplot.show()
@@ -110,6 +112,7 @@ def plot():
 def main():
     '''Main Funktion '''
     plot()
+
 
 if __name__ == "__main__":
     main()

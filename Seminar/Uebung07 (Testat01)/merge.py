@@ -11,7 +11,6 @@
 # https://www.geeksforgeeks.org/bubble-sort/
 # https://en.wikipedia.org/wiki/Bubble_sort
 
-import time
 import math
 
 def mergeSortedLists(A, B):
@@ -40,8 +39,10 @@ def mergeSort(A):
         return A
     else:
         mid = math.floor(len(A)/2)
+
         leftHalf = mergeSort(A[:mid])
         rightHalf = mergeSort(A[mid:])
+
         newList = mergeSortedLists(leftHalf, rightHalf)
 
     return newList

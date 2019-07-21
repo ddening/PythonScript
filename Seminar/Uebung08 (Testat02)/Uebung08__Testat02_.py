@@ -1,12 +1,12 @@
-# Seminar Uebung 08 (Testa02)                         
+# Seminar Uebung 09 (Testa02 - Optimized)
 #  _____________________________________
-#                                       
-#          /               ,            
+#
+#          /               ,
 #  ----__-/----__----__--------__----__-
 #    /   /   /___) /   ) /   /   ) /   )
 #  _(___/___(___ _/___/_/___/___/_(___/_
-#                                    /  
-#                                (_ /   
+#                                    /
+#                                (_ /
 # Quellen:
 
 import sys
@@ -14,14 +14,15 @@ import colorama
 import copy
 import time
 
-# GLOBALE DEFINITION 
-RED = '\033[31m'        # mode 31 = red forground
-RESET = '\033[0m'       # mode 0  = reset
+# GLOBALE DEFINITION
+RED = '\033[31m'  # mode 31 = red forground
+RESET = '\033[0m'  # mode 0  = reset
+
 
 def printField(field):
     ''' Gibt das Spielfeld in der Konsole aus
-        
-    Args: 
+
+    Args:
         field (lst): Enthaelt das gesamte Spielfeld
     Returns:
         None
@@ -34,9 +35,10 @@ def printField(field):
         print(_string)
     print()
 
+
 def _searchMaxLine(filename):
     ''' Hilfsfunktion fuer convertFileToField, welche die Laengste Zeile eines Bildes/Feldes ermittelt
-        
+
         Args:
             filename (string): Name der Datei in der sich das Feld befindet
         Returns:
@@ -53,13 +55,14 @@ def _searchMaxLine(filename):
         _max.append(len(line))
         line = f.readline()
 
-    f.close() 
+    f.close()
 
     return max(_max)
-    
+
+
 def convertFileToField(filename, emptyMarker, filledMarker):
     ''' Erstellt ein Feld als Liste aus einer .txt Datei, welche das Feld beinhaltet
-        
+
         Args:
             filename (string): Dateiname
             emptyMarker (string): Zeichen mit dem <nichts> gefuellt wird
@@ -80,26 +83,27 @@ def convertFileToField(filename, emptyMarker, filledMarker):
         field.append([emptyMarker] * (_maxLine - 1))
         line = f.readline()
 
-    f.close() 
+    f.close()
 
     # Fuelle Feld
     f = open(filename, "r")
     line = f.readline()
-    
+
     counter = 0
     while line:
-        for j in range (0, len(line) - 1):
+        for j in range(0, len(line) - 1):
             field[counter][j] = line[j]
         line = f.readline()
         counter = counter + 1
 
     return field
 
+
 def isFree(rowNumber, colNumber, arr):
     ''' Ueberprueft Feldposition auf Gueltigkeit
-        
+
         Args:
-            rowNumber (int): Zeile 
+            rowNumber (int): Zeile
             colNumber (int): Spalte
             arr (lst): Spielfeld
         Returns:
@@ -110,11 +114,12 @@ def isFree(rowNumber, colNumber, arr):
     else:
         return False
 
+
 def isEscape(rowNumber, colNumber, arr):
     ''' Ueberprueft ob Feldposition Ausgang ist
-        
+
         Args:
-            rowNumber (int): Zeile 
+            rowNumber (int): Zeile
             colNumber (int): Spalte
             arr (lst): Spielfeld
         Returns:
@@ -125,72 +130,77 @@ def isEscape(rowNumber, colNumber, arr):
     else:
         return False
 
+
 def nodeVisited(rowNumber, colNumber, route):
     '''Docstring'''
     if (rowNumber, colNumber) in route:
         return True
     else:
-        return False  
+        return False
+
 
 def isDeadEnd(rowNumber, colNumber, _arr):
     # Wenn alle Felder umherum belegt -> True
-    if (isFree(rowNumber + 1, colNumber, _arr) and isFree(rowNumber - 1, colNumber, _arr) and isFree(rowNumber, colNumber + 1, _arr) and isFree(rowNumber, colNumber - 1, _arr)):
+    if (isFree(rowNumber + 1, colNumber, _arr) and isFree(rowNumber - 1, colNumber, _arr) and isFree(rowNumber,
+                                                                                                     colNumber + 1,
+                                                                                                     _arr) and isFree(
+            rowNumber, colNumber - 1, _arr)):
         return False
 
-def delNodes(visited, route):
-    for coord in route:
-        if coord in visited:
-            visited.remove(coord)
-            
 
-def _findEscape(arr, rowNumber, colNumber, route = (), visited = [], sol = []):
+def _findEscape(arr, rowNumber, colNumber, route=()):
     '''Hilfsfunktion liefert alle moeglichen Pfade die Loesung sind'''
 
     # Ausserhalb des Feldes
-    if rowNumber < 0 or rowNumber >= len(arr) or colNumber < 0 or colNumber >= len(arr[rowNumber]):
+    if rowNumber < 0 or rowNumber >= len(arr) - 1 or colNumber < 0 or colNumber >= len(arr[rowNumber]):
         return
+
+    route += ((rowNumber, colNumber),)
 
     # Ist aktuelle Zelle Ausgang? -> Ja: Speicher Pfad ab und return
     if isEscape(rowNumber, colNumber, arr):
-        print("Laenge des Pfades: ", len(route))
-        sol.append(route)
+        return route
 
-        return True
+    steps = ((0, 1), (0, -1), (1, 0), (-1, 0))
+    myRoutes = []
+    #
 
-    # Verhindert Loop-Schleifen, falls Kindknoten wieder zum Elternknoten zeigt
-    if nodeVisited(rowNumber, colNumber, route):
-        return
+    for s in steps:
+        newRow = rowNumber + s[0]
+        newCol = colNumber + s[1]
 
-    # Falls Feld bereits belegt -- return
-    if not isFree(rowNumber, colNumber, arr):
-        return
+        if isFree(newRow, newCol, arr) and not nodeVisited(newRow, newCol, route):
+            _route = copy.deepcopy(route)
+            _tempRoute = _findEscape(arr, newRow, newCol, _route)
 
-    # Fuege Pfadpunkt zu Route hinzu
-    route += ((rowNumber, colNumber), )
-    visited.append((rowNumber, colNumber))
+            # Vermeide leere Liste
+            if len(_tempRoute) > 0:
+                myRoutes.append(_tempRoute)
 
-    _findEscape(arr, rowNumber + 1, colNumber, route, visited, sol) 
-    _findEscape(arr, rowNumber, colNumber - 1, route, visited, sol) 
-    _findEscape(arr, rowNumber, colNumber + 1, route, visited, sol) 
-    _findEscape(arr, rowNumber - 1, colNumber, route, visited, sol)
+    # Falls keine Bewegung moeglich
+    if len(myRoutes) == 0:
+        return ()
 
-    return sol
+    # Bestimme Minimum
+    sPath = min(myRoutes, key=len)
 
-def findEscape(arr, rowNumber, colNumber, route = ()):
+    return sPath
+
+
+def findEscape(arr, rowNumber, colNumber, route=()):
     '''Liefert kuerzesten Pfad als Loesung'''
     # Alle Loesungen die zum Ausgang fuehren
     paths = _findEscape(arr, rowNumber, colNumber)
     print("Anzahl an Lösungen gefunden: ", len(paths))
-    # Bestimmte kuerzesten Pfad
-    sPath = min(paths, key = len)
-    print("Route: ", sPath)
 
-    return sPath
-    
+    return paths
+
+
 def fillField(arr, path):
     ''' Visuelle Darstellung des Loesungspfades'''
     for coord in path:
         arr[coord[0]][coord[1]] = RED + 'e' + RESET
+
 
 def main():
     '''Main Fkt'''
@@ -200,8 +210,7 @@ def main():
     global escapeSymbol
 
     # Init
-    colorama.init()
-    sys.setrecursionlimit(10000)
+    # colorama.init()
 
     # Definition der Variablen
     emptyMarker = ''
@@ -210,14 +219,13 @@ def main():
 
     # Erstelle Feld + Ausgabe
     arr = convertFileToField("field2.txt", emptyMarker, filledMarker)
-    # printField(arr)
 
-    _start = time.perf_counter()
-    # Finde alle Pfade
+    start = time.perf_counter()
     _t = findEscape(arr, 1, 1)
-    _end = time.perf_counter()
+    end = time.perf_counter()
 
-    print("Zeit um Pfad zu bestimmen [in s]: ", _end-_start)
+    print("Berechnungseit in [s]: ", end - start)
+    print("Kürzeste Route: ", _t)
 
     # Pfaddarstellung im Feld
     fillField(arr, _t)

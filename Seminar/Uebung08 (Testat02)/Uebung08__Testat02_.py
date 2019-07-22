@@ -189,9 +189,9 @@ def _findEscape(arr, rowNumber, colNumber, route=()):
 
 def findEscape(arr, rowNumber, colNumber, route=()):
     '''Liefert kuerzesten Pfad als Loesung'''
-    # Alle Loesungen die zum Ausgang fuehren
+    # Kuerzeste Loesung
     paths = _findEscape(arr, rowNumber, colNumber)
-    print("Anzahl an Lösungen gefunden: ", len(paths))
+    print("Länge des Pfades: ", len(paths))
 
     return paths
 
@@ -204,6 +204,8 @@ def fillField(arr, path):
 
 def main():
     '''Main Fkt'''
+
+    colorama.init()
 
     # Globale Variablen
     global filledMarker
@@ -218,13 +220,13 @@ def main():
     escapeSymbol = 'E'
 
     # Erstelle Feld + Ausgabe
-    arr = convertFileToField("field2.txt", emptyMarker, filledMarker)
+    arr = convertFileToField("field1.txt", emptyMarker, filledMarker)
 
     start = time.perf_counter()
     _t = findEscape(arr, 1, 1)
     end = time.perf_counter()
 
-    print("Berechnungseit in [s]: ", end - start)
+    print("Berechnungszeit in [s]: ", end - start)
     print("Kürzeste Route: ", _t)
 
     # Pfaddarstellung im Feld

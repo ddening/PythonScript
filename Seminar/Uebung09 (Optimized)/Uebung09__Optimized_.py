@@ -8,6 +8,7 @@
 #                                    /  
 #                                (_ /   
 # Quellen:
+#
 
 import sys
 import colorama
@@ -34,10 +35,23 @@ def printField(field):
         print(_string)
     print()
 
-def printLazyField(arr):
-    for line in arr:
-        print(line)
+def printMap(map):
+    for line in map:
+        for j in line:
+            if j[0] is -1:
+                print("x", end= ' ')
+            elif j[0] is 0:
+                print(RED + 'F' + RESET, end= ' ')
+            else:
+                print(colorama.Fore.GREEN + "e" + RESET, end= ' ')
+        print()
 
+def printSimple(map):
+    for r in map:
+        for c in r:
+            print(c[0], end = ' ')
+        print()
+    print()
 
 def _searchMaxLine(filename):
     ''' Hilfsfunktion fuer convertFileToField, welche die Laengste Zeile eines Bildes/Feldes ermittelt
@@ -137,11 +151,14 @@ def nodeVisited(rowNumber, colNumber, route):
     else:
         return False
 
+# NOTES:
+# -1 Knoten auf Karte noch nicht besucht
+#  0 besuche diesen Weg nicht
 def buildEmptyMap(arr):
     ''' Erzeugt <leere> Karte. <-1> symbolisiert dabei ein leeres bzw. nicht besuchtes Feld'''
     for i in range(0, len(arr)):
         for j in range(0, len(arr[i])):
-            arr[i][j] = 0
+            arr[i][j] = [-1, ()]
 
     return arr
 
@@ -149,22 +166,31 @@ def _findEscape(arr, rowNumber, colNumber, routeMap, route = ()):
     '''Hilfsfunktion liefert alle moeglichen Pfade die Loesung sind'''
 
     # Ausserhalb des Feldes
-    if rowNumber < 0 or rowNumber >= len(arr) - 1 or colNumber < 0 or colNumber >= len(arr[rowNumber]):
+    if rowNumber < 0 or rowNumber >= len(arr) - 1 or colNumber < 0 or colNumber >= len(arr[rowNumber]) - 1:
         return ()
 
     route += ((rowNumber, colNumber), )
 
+    # Blockierter Knoten -> Stop
+    if routeMap[rowNumber][colNumber][0] is 0:
+        return ()
+
     # Knoten wurde bereits min. einmal ueber anderen Pfad erreicht
-    if routeMap[rowNumber][colNumber] is not 0:
+    if routeMap[rowNumber][colNumber][0] is not -1:
 
-        #print("Laenge Route: ", len(route))
-        #print("rowNumer: ", rowNumber)
-        #print("colNumber: ", colNumber)
+        # Falls derzeitige Route zum aktuellen Knoten laenger ist als anderer Pfad -> Stop
+        if len(route) >= routeMap[rowNumber][colNumber][0]:
+            # Vergleiche Pfad aus Karte mit aktuellen Pfad und blockiere Tupel/Knoten die nicht gleich sind
+            # Loesche Teilpfad bzw. blockieren mit 0
+            # print("Derzeitige Route: ", route)
+            # print("Route aus Karte : ", routeMap[rowNumber][colNumber][1])
 
-        # Falls derzeitige Route zum aktuellen Knoten laenger ist, als anderer Pfad -> Stop
-        if len(route) > routeMap[rowNumber][colNumber]:
+            diff = tuple(set(route).difference(routeMap[rowNumber][colNumber][1]))
+            for coord in diff:
+                routeMap[coord[0]][coord[1]][0] = 0
+            
             return ()
-
+        
     # Ist aktuelle Zelle Ausgang? -> Ja: Speicher Pfad ab und return
     if isEscape(rowNumber, colNumber, arr):
         return route
@@ -177,17 +203,17 @@ def _findEscape(arr, rowNumber, colNumber, routeMap, route = ()):
         newCol = colNumber + s[1]
 
         if isFree(newRow, newCol, arr) and not nodeVisited(newRow, newCol, route):
-            routeMap[rowNumber][colNumber] = len(route)
-            # printLazyField(routeMap)
-            # print()
+            routeMap[rowNumber][colNumber][0] = len(route)  # Setze neuen kuerzesten Weg in Karte
+            routeMap[rowNumber][colNumber][1] = route       # Speichere dazugehoerigen Pfad ab
+
+            # printSimple(routeMap)
 
             _route = copy.deepcopy(route)
             _tempRoute = _findEscape(arr, newRow, newCol, routeMap, _route)
 
             # Vermeide leere Liste
             if len(_tempRoute) > 0:
-                myRoutes.append(_tempRoute)
-            
+                myRoutes.append(_tempRoute)            
 
     # Falls keine Bewegung moeglich
     if len(myRoutes) == 0:
@@ -200,9 +226,9 @@ def _findEscape(arr, rowNumber, colNumber, routeMap, route = ()):
 
 def findEscape(arr, rowNumber, colNumber, emptyMap, route = ()):
     '''Liefert kuerzesten Pfad als Loesung'''
-    # Alle Loesungen die zum Ausgang fuehren
+    # Kuerzeste Loesung
     paths = _findEscape(arr, rowNumber, colNumber, emptyMap)
-    print("Anzahl an Lösungen gefunden: ", len(paths))
+    print("Länge des Pfades: ", len(paths))
 
     return paths
     
@@ -213,6 +239,8 @@ def fillField(arr, path):
 
 def main():
     '''Main Fkt'''
+
+    colorama.init()
 
     # Globale Variablen
     global filledMarker
@@ -231,15 +259,16 @@ def main():
     start = time.perf_counter()
     _t = findEscape(arr, 1, 1, emptyMap)
     end = time.perf_counter()
-
-    print("Berechnungseit in [s]: ", end - start)
+    
+    print("Berechnungszeit in [s]: ", end - start)
     print("Kürzeste Route: ",_t)
 
     # Pfaddarstellung im Feld
     fillField(arr, _t)
     printField(arr)
 
-
+    print("Karte mit blockierten Elementen: \n")
+    printMap(emptyMap)
 
 if __name__ == "__main__":
     main()

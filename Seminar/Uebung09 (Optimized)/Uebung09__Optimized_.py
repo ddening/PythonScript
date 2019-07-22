@@ -162,6 +162,9 @@ def buildEmptyMap(arr):
 
     return arr
 
+def isDeadEnd():
+    pass
+
 def _findEscape(arr, rowNumber, colNumber, routeMap, route = ()):
     '''Hilfsfunktion liefert alle moeglichen Pfade die Loesung sind'''
 
@@ -170,7 +173,7 @@ def _findEscape(arr, rowNumber, colNumber, routeMap, route = ()):
         return ()
 
     route += ((rowNumber, colNumber), )
-
+   
     # Blockierter Knoten -> Stop
     if routeMap[rowNumber][colNumber][0] is 0:
         return ()
@@ -182,8 +185,6 @@ def _findEscape(arr, rowNumber, colNumber, routeMap, route = ()):
         if len(route) >= routeMap[rowNumber][colNumber][0]:
             # Vergleiche Pfad aus Karte mit aktuellen Pfad und blockiere Tupel/Knoten die nicht gleich sind
             # Loesche Teilpfad bzw. blockieren mit 0
-            # print("Derzeitige Route: ", route)
-            # print("Route aus Karte : ", routeMap[rowNumber][colNumber][1])
 
             diff = tuple(set(route).difference(routeMap[rowNumber][colNumber][1]))
             for coord in diff:
@@ -213,7 +214,10 @@ def _findEscape(arr, rowNumber, colNumber, routeMap, route = ()):
 
             # Vermeide leere Liste
             if len(_tempRoute) > 0:
-                myRoutes.append(_tempRoute)            
+                myRoutes.append(_tempRoute) 
+        else:
+            # print("DeadEnd Row Col: ", rowNumber, colNumber)
+            routeMap[newRow][newCol][0] = 0
 
     # Falls keine Bewegung moeglich
     if len(myRoutes) == 0:
@@ -236,6 +240,7 @@ def fillField(arr, path):
     ''' Visuelle Darstellung des Loesungspfades'''
     for coord in path:
         arr[coord[0]][coord[1]] = RED + 'e' + RESET
+    return arr
 
 def main():
     '''Main Fkt'''
@@ -252,7 +257,7 @@ def main():
     escapeSymbol = 'E'
 
     # Erstelle Feld
-    arr = convertFileToField("field1.txt", emptyMarker, filledMarker)
+    arr = convertFileToField("field3.txt", emptyMarker, filledMarker)
     # Erstelle leere Karte
     emptyMap = buildEmptyMap(copy.deepcopy(arr))
 

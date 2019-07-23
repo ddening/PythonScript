@@ -172,6 +172,7 @@ def _findEscape(arr, rowNumber, colNumber, routeMap, route = ()):
     if rowNumber < 0 or rowNumber >= len(arr) - 1 or colNumber < 0 or colNumber >= len(arr[rowNumber]) - 1:
         return ()
 
+    
     route += ((rowNumber, colNumber), )
    
     # Blockierter Knoten -> Stop
@@ -257,7 +258,7 @@ def main():
     escapeSymbol = 'E'
 
     # Erstelle Feld
-    arr = convertFileToField("field3.txt", emptyMarker, filledMarker)
+    arr = convertFileToField("field4.txt", emptyMarker, filledMarker)
     # Erstelle leere Karte
     emptyMap = buildEmptyMap(copy.deepcopy(arr))
 

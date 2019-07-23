@@ -35,7 +35,7 @@ def printField(field):
     for i in range(0, len(field)):
         _string = ""
         for j in range(0, len(field[i])):
-            _string = _string + color.LIGHTWHITE_EX + field[i][j] + color.RESET
+            _string = _string + field[i][j]
         print(_string)
     print()
     

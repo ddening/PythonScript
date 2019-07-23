@@ -8,11 +8,8 @@
 #                                    /  
 #                                (_ /   
 # Quellen:
-#
-# TODO: 
-# Für zufälligen Startpunkt anpassen -- dijkstraInit()
-# Q[0][1] = 0
-# Nächsten Knoten u bestimmen
+# https://de.wikipedia.org/wiki/Dijkstra-Algorithmus
+
 
 import sys
 import colorama

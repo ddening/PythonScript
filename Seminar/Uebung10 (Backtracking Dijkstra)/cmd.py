@@ -15,8 +15,12 @@ import math
 
 def fillField(arr, path):
     ''' Visuelle Darstellung des Loesungspfades'''
+
     for coord in path:
         arr[coord[0]][coord[1]] = color.RED + 'e' + color.RESET
+
+    arr[path[0][0]][path[0][1]] = color.GREEN + 'A' + color.RESET
+    arr[coord[0]][coord[1]] = color.GREEN + 'E' + color.RESET
     return arr
 
 def printField(field):
@@ -31,7 +35,7 @@ def printField(field):
     for i in range(0, len(field)):
         _string = ""
         for j in range(0, len(field[i])):
-            _string = _string + field[i][j]
+            _string = _string + color.LIGHTWHITE_EX + field[i][j] + color.RESET
         print(_string)
     print()
     

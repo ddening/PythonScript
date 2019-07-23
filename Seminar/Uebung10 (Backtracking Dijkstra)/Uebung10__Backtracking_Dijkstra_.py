@@ -218,40 +218,12 @@ def dijkstra(arr, start, exitCoord):
 
     return routeMap  
  
-def searchExit(arr, start, route=()):
-    '''Such die Koordinaten vom Ausgang'''
-
-    # Definition
-    rowNumber = start[0]
-    colNumber = start[1]
-    exitCoord = ()
-
-    # Ausserhalb des Feldes
-    if rowNumber < 0 or rowNumber >= len(arr) - 1 or colNumber < 0 or colNumber >= len(arr[rowNumber]):
-        return
-
-    route += ((rowNumber, colNumber),)
-
-    # Ist aktuelle Zelle Ausgang? -> Ja: Speicher Pfad ab und return
-    if isEscape(rowNumber, colNumber, arr):
-        exitCoord = (rowNumber, colNumber)
-        return exitCoord
-
-    steps = ((0, 1), (0, -1), (1, 0), (-1, 0))
-    myRoutes = []
-
-    for s in steps:
-        newRow = rowNumber + s[0]
-        newCol = colNumber + s[1]
-
-        if isFree(newRow, newCol, arr) and not nodeVisited(newRow, newCol, route):
-            _route = copy.deepcopy(route)
-            exitCoord = searchExit(arr, (newRow, newCol), _route)
-            if exitCoord:
-                return exitCoord
-
-    return exitCoord
-           
+def searchExitCoord(arr):
+    for line in range(0, len(arr)):
+        for c in range(0, len(arr[line])):
+            if arr[line][c] is escapeSymbol:
+                return (line, c)
+          
 def main():
     '''Main Fkt'''
 
@@ -270,15 +242,16 @@ def main():
     # Erstelle Feld
     arr = convertFileToField("field3.txt", emptyMarker, filledMarker)
 
-    print("Suche Ausganskoordinaten...")
-    #exitCoord = searchExit(arr, startPos)
-    #print(exitCoord)
+    # Ausgangskoordinaten
+    print("Berechne Ausganskoordinaten...")
+    s = time.perf_counter()
+    exitCoord = searchExitCoord(arr)
+    e = time.perf_counter()
+    print("Berechnungszeit in [s]: ", e-s)
+    print()
 
+    # Ausgangspfadberechnung
     print("Berechne Ausgangspfad...")
-    
-    # 
-    exitCoord = (15, 46)
-
     s = time.perf_counter()
     solution_full = dijkstra(copy.deepcopy(arr), startPos, exitCoord)
     e = time.perf_counter()

@@ -9,6 +9,7 @@
 #                                (_ /   
 # Quellen:
 # https://de.wikipedia.org/wiki/Dijkstra-Algorithmus
+# https://www.dcode.fr/maze-generator
 
 
 import sys
@@ -223,7 +224,11 @@ def searchExitCoord(arr):
         for c in range(0, len(arr[line])):
             if arr[line][c] is escapeSymbol:
                 return (line, c)
-          
+def searchStartCoord(arr):
+    for line in range(0, len(arr)):
+        for c in range(0, len(arr[line])):
+            if arr[line][c] is ' ':
+                return (line, c)         
 def main():
     '''Main Fkt'''
 
@@ -239,30 +244,36 @@ def main():
     escapeSymbol = 'E'
     startPos = (1, 1)
 
-    # Erstelle Feld
-    arr = convertFileToField("field3.txt", emptyMarker, filledMarker)
+    mazesLst = ["field3.txt", "field4.txt", "field5.txt", "field6.txt"]
 
-    # Ausgangskoordinaten
-    print("Berechne Ausganskoordinaten...")
-    s = time.perf_counter()
-    exitCoord = searchExitCoord(arr)
-    e = time.perf_counter()
-    print("Berechnungszeit in [s]: ", e-s)
-    print()
+    for maze in mazesLst:
 
-    # Ausgangspfadberechnung
-    print("Berechne Ausgangspfad...")
-    s = time.perf_counter()
-    solution_full = dijkstra(copy.deepcopy(arr), startPos, exitCoord)
-    e = time.perf_counter()
-    solution_path = solution_full[exitCoord[0]][exitCoord[1]][2]
+        # Erstelle Feld
+        arr = convertFileToField(maze, emptyMarker, filledMarker)
 
-    print("Berechnungszeit in [s]: ", e-s)
-    print()
+        # Lasse Programm Startposition bestimmen
+        startPos = searchStartCoord(arr)
 
-    solution_field = cmd.fillField(arr, solution_path)
-    cmd.printField(solution_field)
+        # Ausgangskoordinaten
+        print("Berechne Ausganskoordinaten...")
+        s = time.perf_counter()
+        exitCoord = searchExitCoord(arr)
+        e = time.perf_counter()
+        print("Berechnungszeit in [s]: ", e-s)
+        print()
 
+        # Ausgangspfadberechnung
+        print("Berechne Ausgangspfad...")
+        s = time.perf_counter()
+        solution_full = dijkstra(copy.deepcopy(arr), startPos, exitCoord)
+        e = time.perf_counter()
+        solution_path = solution_full[exitCoord[0]][exitCoord[1]][2]
+
+        print("Berechnungszeit in [s]: ", e-s)
+        print()
+
+        solution_field = cmd.fillField(arr, solution_path)
+        cmd.printField(solution_field)
 
 if __name__ == "__main__":
     main()

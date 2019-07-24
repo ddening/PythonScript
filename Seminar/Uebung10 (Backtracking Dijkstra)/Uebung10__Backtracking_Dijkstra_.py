@@ -194,7 +194,7 @@ def dijkstra(arr, start, exitCoord):
         Q.remove(u)         # Entferne Knoten aus Menge Q
 
         if u[0] == exitCoord:
-            break
+            return routeMap
 
         # Besuche alle Nachbarn vom Knoten
         steps = ((0,1), (0, -1), (1, 0), (-1, 0))
@@ -244,7 +244,7 @@ def main():
     escapeSymbol = 'E'
     startPos = (1, 1)
 
-    mazesLst = ["field1.txt", "field3.txt", "field4.txt", "field5.txt", "field6.txt"]
+    mazesLst = ["field1.txt", "field3.txt", "field5.txt", "field6.txt"]
 
     for maze in mazesLst:
 

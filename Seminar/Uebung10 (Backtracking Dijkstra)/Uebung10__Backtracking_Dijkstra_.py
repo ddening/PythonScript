@@ -244,7 +244,7 @@ def main():
     escapeSymbol = 'E'
     startPos = (1, 1)
 
-    mazesLst = ["field3.txt", "field4.txt", "field5.txt", "field6.txt"]
+    mazesLst = ["field1.txt", "field3.txt", "field4.txt", "field5.txt", "field6.txt"]
 
     for maze in mazesLst:
 
@@ -255,11 +255,13 @@ def main():
         startPos = searchStartCoord(arr)
 
         # Ausgangskoordinaten
-        print("Berechne Ausganskoordinaten...")
+        print("Suche Ausganskoordinaten...")
         s = time.perf_counter()
         exitCoord = searchExitCoord(arr)
         e = time.perf_counter()
-        print("Berechnungszeit in [s]: ", e-s)
+        if(exitCoord):
+            print("Ausgangskoordinaten gefunden!")
+        print("Suchzeit in [s]: ", e-s)
         print()
 
         # Ausgangspfadberechnung

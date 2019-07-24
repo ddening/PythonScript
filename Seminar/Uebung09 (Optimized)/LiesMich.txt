@@ -1,0 +1,4 @@
+Leichte Verbesserungen bei der Laufzeit im Vergleich zu Uebung08
+Wegberechnung für field3.txt nicht korrekt
+
+Für vollständig optimierte Version siehe Uebung10 Dijkstra

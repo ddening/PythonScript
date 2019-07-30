@@ -6,4 +6,4 @@ Implementation of sorting algorithms using Python 3.5
 * [Insertion Sort](https://www.pythoncentral.io/insertion-sort-implementation-guide/)
 
 # Misc
-* Nice visual animations of sorting algorithms: https://visualgo.net/en/sorting
+* Visual animations of sorting algorithms: https://visualgo.net/en/sorting

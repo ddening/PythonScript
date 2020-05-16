@@ -1,4 +1,4 @@
-# Seminar Uebung 09 (Testa02 - Optimized)
+# Seminar Uebung 08 (Testa02 - Optimized)
 #  _____________________________________
 #
 #          /               ,
@@ -18,7 +18,6 @@ import time
 RED = '\033[31m'  # mode 31 = red forground
 RESET = '\033[0m'  # mode 0  = reset
 
-
 def printField(field):
     ''' Gibt das Spielfeld in der Konsole aus
 
@@ -34,7 +33,6 @@ def printField(field):
             _string = _string + field[i][j]
         print(_string)
     print()
-
 
 def _searchMaxLine(filename):
     ''' Hilfsfunktion fuer convertFileToField, welche die Laengste Zeile eines Bildes/Feldes ermittelt
@@ -58,7 +56,6 @@ def _searchMaxLine(filename):
     f.close()
 
     return max(_max)
-
 
 def convertFileToField(filename, emptyMarker, filledMarker):
     ''' Erstellt ein Feld als Liste aus einer .txt Datei, welche das Feld beinhaltet
@@ -98,7 +95,6 @@ def convertFileToField(filename, emptyMarker, filledMarker):
 
     return field
 
-
 def isFree(rowNumber, colNumber, arr):
     ''' Ueberprueft Feldposition auf Gueltigkeit
 
@@ -113,7 +109,6 @@ def isFree(rowNumber, colNumber, arr):
         return True
     else:
         return False
-
 
 def isEscape(rowNumber, colNumber, arr):
     ''' Ueberprueft ob Feldposition Ausgang ist
@@ -130,14 +125,12 @@ def isEscape(rowNumber, colNumber, arr):
     else:
         return False
 
-
 def nodeVisited(rowNumber, colNumber, route):
     '''Docstring'''
     if (rowNumber, colNumber) in route:
         return True
     else:
         return False
-
 
 def isDeadEnd(rowNumber, colNumber, _arr):
     # Wenn alle Felder umherum belegt -> True
@@ -146,7 +139,6 @@ def isDeadEnd(rowNumber, colNumber, _arr):
                                                                                                      _arr) and isFree(
             rowNumber, colNumber - 1, _arr)):
         return False
-
 
 def _findEscape(arr, rowNumber, colNumber, route=()):
     '''Hilfsfunktion liefert alle moeglichen Pfade die Loesung sind'''
@@ -186,7 +178,6 @@ def _findEscape(arr, rowNumber, colNumber, route=()):
 
     return sPath
 
-
 def findEscape(arr, rowNumber, colNumber, route=()):
     '''Liefert kuerzesten Pfad als Loesung'''
     # Kuerzeste Loesung
@@ -195,12 +186,10 @@ def findEscape(arr, rowNumber, colNumber, route=()):
 
     return paths
 
-
 def fillField(arr, path):
     ''' Visuelle Darstellung des Loesungspfades'''
     for coord in path:
         arr[coord[0]][coord[1]] = RED + 'e' + RESET
-
 
 def main():
     '''Main Fkt'''
@@ -211,7 +200,7 @@ def main():
     global filledMarker
     global escapeSymbol
 
-    # Init
+    # init
     # colorama.init()
 
     # Definition der Variablen
@@ -232,7 +221,6 @@ def main():
     # Pfaddarstellung im Feld
     fillField(arr, _t)
     printField(arr)
-
 
 if __name__ == "__main__":
     main()

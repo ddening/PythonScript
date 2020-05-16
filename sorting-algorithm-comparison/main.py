@@ -31,7 +31,6 @@ import quick_alt
 MAX_NUMBERS_IN_LIST = 200 + 1
 MAX_INTERV = 1
 
-
 def _createList(MAX_NUMBERS_IN_LIST):
     '''Hilfsfunktion um eine einzige Liste mit zufaelligen Werten zu erstellen'''
 
@@ -43,7 +42,7 @@ def _createList(MAX_NUMBERS_IN_LIST):
 
     return myList
   
-def testListsGenerator(MAX_NUMBERS_IN_LIST):
+def listsGenerator(MAX_NUMBERS_IN_LIST):
     '''Erzeugt Liste mit Listen, welche zufaellige Zahlen beinhalten
 
     Args:
@@ -79,7 +78,7 @@ def plot():
     ax = fig.add_subplot(1,1,1)
 
     # Initialliste
-    ogLst = testListsGenerator(MAX_NUMBERS_IN_LIST)
+    ogLst = listsGenerator(MAX_NUMBERS_IN_LIST)
     # Kopie fuer Bubblesort
     bubbleLst = copy.deepcopy(ogLst)
     # Kopie fuer InsertionSort
@@ -112,7 +111,6 @@ def plot():
 def main():
     '''Main Funktion '''
     plot()
-
 
 if __name__ == "__main__":
     main()

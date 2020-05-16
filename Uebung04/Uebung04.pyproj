@@ -3,15 +3,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>57c74dc4-eb62-4d10-898a-0e29a8291de3</ProjectGuid>
+    <ProjectGuid>d11de592-d9d8-4b5c-8741-f7554e6dc762</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Uebung10__Backtracking_Dijkstra_.py</StartupFile>
+    <StartupFile>Uebung04.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Uebung10 (Backtracking Dijkstra)</Name>
-    <RootNamespace>Uebung10 (Backtracking Dijkstra)</RootNamespace>
+    <Name>Uebung04</Name>
+    <RootNamespace>Uebung04</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <InterpreterId>Global|PythonCore|3.7</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,23 +24,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="cmd.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Uebung10__Backtracking_Dijkstra_.py" />
+    <Compile Include="Uebung04.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="field1.txt" />
-    <Content Include="field2.txt" />
-    <Content Include="field3.txt" />
-    <Content Include="field4.txt" />
+    <InterpreterReference Include="Global|PythonCore|3.5" />
+    <InterpreterReference Include="Global|PythonCore|3.7" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
-  <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
-  <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in
        the BeforeBuild and AfterBuild targets below. -->
@@ -47,4 +41,5 @@
   </Target>
   <Target Name="AfterBuild">
   </Target>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

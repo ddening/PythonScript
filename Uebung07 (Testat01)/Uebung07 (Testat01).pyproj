@@ -3,18 +3,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>d11de592-d9d8-4b5c-8741-f7554e6dc762</ProjectGuid>
+    <ProjectGuid>6d329127-201b-4e72-8b50-e9d9396db151</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Uebung04.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Uebung04</Name>
-    <RootNamespace>Uebung04</RootNamespace>
+    <Name>Uebung07 (Testat01)</Name>
+    <RootNamespace>Uebung07 (Testat01)</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
-    <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
-    <InterpreterVersion>3.5</InterpreterVersion>
+    <InterpreterId>Global|PythonCore|3.7</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,17 +24,33 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Uebung04.py" />
+    <Compile Include="bubble.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="insertion.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="main.py" />
+    <Compile Include="merge.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="quick.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="selection.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\3.5" />
+    <Content Include="Figure_1.png" />
+    <Content Include="Figure_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.7" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
-  <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
-  <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in
        the BeforeBuild and AfterBuild targets below. -->
@@ -44,4 +59,5 @@
   </Target>
   <Target Name="AfterBuild">
   </Target>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
